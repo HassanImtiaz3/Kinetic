@@ -59,3 +59,20 @@ cPanel Git then copies those files into `public_html`.
 2. Set the checked-out branch to **`cpanel`** (after the first Actions run creates it).
 3. Ensure deploy path / `.cpanel.yml` targets `/home/techhgxq/public_html/`.
 4. Optional: add a GitHub webhook so each push auto-deploys (cPanel shows the webhook URL).
+
+### If cPanel says “Not possible to fast-forward”
+
+The local cPanel clone diverged from `origin/cpanel` (often after an orphan deploy). Fix once:
+
+1. In cPanel **Terminal** (or SSH), go to the Git repo directory for this site.
+2. Run:
+
+```bash
+git fetch origin
+git checkout cpanel
+git reset --hard origin/cpanel
+```
+
+3. Run **Pull or Deploy** again in Git Version Control.
+
+Or: remove the repository in cPanel Git Version Control and clone again, checking out branch **`cpanel`**.

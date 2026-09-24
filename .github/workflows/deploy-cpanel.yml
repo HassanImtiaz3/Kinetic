@@ -59,5 +59,9 @@ jobs:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           publish_dir: ./out
           publish_branch: cpanel
-          force_orphan: true
+          # Keep linear history so cPanel Git can fast-forward on Update.
+          # force_orphan rewrites history every deploy and causes:
+          # "Not possible to fast-forward, aborting."
+          force_orphan: false
+          force: false
           commit_message: 'Deploy static site'
