@@ -3,13 +3,26 @@
 import { useEffect, useRef } from 'react';
 import Link from 'next/link';
 import { gsap } from 'gsap';
+import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import { ProcessTimeline } from '@/shared/components/ui/ProcessTimeline';
 import { Reveal } from '@/shared/components/ui/Reveal';
 import { ROUTES } from '@/shared/constants/routes';
-import { SITE_NAME, SITE_SUBLINE, SITE_TAGLINE } from '@/shared/constants/site';
-import { APPROACH, PARTNER_POINTS, SERVICES, WHY_CHOOSE } from '@/shared/content/site';
+import { SITE_DESCRIPTION, SITE_NAME, SITE_SUBLINE, SITE_TAGLINE } from '@/shared/constants/site';
+import {
+  APPROACH,
+  COMMITMENTS,
+  HOME_FAQS,
+  INDUSTRIES,
+  PARTNER_INTRO,
+  PARTNER_POINTS,
+  SERVICES,
+  WHY_CHOOSE,
+} from '@/shared/content/site';
 import './home.css';
 
-const highlights = SERVICES.slice(0, 3);
+gsap.registerPlugin(ScrollTrigger);
+
+const highlights = SERVICES.slice(0, 6);
 
 export function HomePage() {
   const heroRef = useRef<HTMLElement>(null);
@@ -23,9 +36,14 @@ export function HomePage() {
       const tl = gsap.timeline({ defaults: { ease: 'power3.out' } });
       tl.from('.home-hero__eyebrow', { opacity: 0, y: 18, duration: 0.6 })
         .from('.home-hero__title', { opacity: 0, y: 40, duration: 0.85 }, '-=0.25')
-        .from('.home-hero__lede', { opacity: 0, y: 24, duration: 0.7 }, '-=0.45')
+        .from('.home-hero__lede', { opacity: 0, y: 24, duration: 0.7, stagger: 0.1 }, '-=0.45')
         .from('.home-hero__actions > *', { opacity: 0, y: 16, duration: 0.55, stagger: 0.08 }, '-=0.35')
-        .from('.home-hero__panel', { opacity: 0, x: 40, duration: 0.9 }, '-=0.7');
+        .from('.home-hero__panel', { opacity: 0, x: 40, duration: 0.9 }, '-=0.7')
+        .from(
+          '.home-hero__pipeline span',
+          { opacity: 0, x: -12, duration: 0.45, stagger: 0.07 },
+          '-=0.55'
+        );
 
       gsap.to('.home-hero__orb', {
         y: 18,
@@ -33,6 +51,17 @@ export function HomePage() {
         repeat: -1,
         yoyo: true,
         ease: 'sine.inOut',
+      });
+
+      gsap.to('.home-hero__panel', {
+        y: -18,
+        ease: 'none',
+        scrollTrigger: {
+          trigger: root,
+          start: 'top top',
+          end: 'bottom top',
+          scrub: true,
+        },
       });
     }, root);
 
@@ -53,6 +82,7 @@ export function HomePage() {
               to your imagination.
             </h1>
             <p className="section-lede home-hero__lede">{SITE_SUBLINE}</p>
+            <p className="section-lede home-hero__lede home-hero__lede--secondary">{SITE_DESCRIPTION}</p>
             <div className="cta-row home-hero__actions">
               <Link href={ROUTES.services} className="btn btn-primary">
                 Explore services
@@ -75,7 +105,7 @@ export function HomePage() {
         </div>
       </section>
 
-      <section className="section-x section-y">
+      <section className="section-x section-y section--light">
         <div className="container">
           <Reveal>
             <p className="eyebrow">Why choose us</p>
@@ -87,16 +117,16 @@ export function HomePage() {
             <p className="section-lede">{WHY_CHOOSE.body}</p>
           </Reveal>
 
-          <div className="card-grid card-grid--3" style={{ marginTop: 40 }}>
-            {highlights.map((service, i) => (
-              <Reveal key={service.slug} delay={i * 100}>
-                <article className="surface-card">
+          <Reveal staggerChildren=".surface-card" style={{ marginTop: 40 }}>
+            <div className="card-grid card-grid--3">
+              {highlights.map((service) => (
+                <article key={service.slug} className="surface-card" style={{ opacity: 0 }}>
                   <h3>{service.title}</h3>
                   <p>{service.summary}</p>
                 </article>
-              </Reveal>
-            ))}
-          </div>
+              ))}
+            </div>
+          </Reveal>
 
           <Reveal delay={120}>
             <div className="cta-row">
@@ -111,24 +141,84 @@ export function HomePage() {
         </div>
       </section>
 
-      <section className="section-x section-y home-approach">
+      <section className="section-x section-y home-commitments">
         <div className="container">
           <Reveal>
-            <p className="eyebrow">Our approach</p>
+            <p className="eyebrow">How we operate</p>
             <h2 className="section-heading">
-              Understanding your needs.
+              Three commitments that stay true
               <br />
-              <span className="accent">Delivering practical solutions.</span>
+              <span className="accent">when delivery pressure is high.</span>
             </h2>
           </Reveal>
-          <div className="home-approach__grid">
-            {APPROACH.map((item, i) => (
-              <Reveal key={item.step} delay={i * 70}>
-                <article className="surface-card home-approach__card">
-                  <span className="home-approach__step">{item.step}</span>
+          <Reveal staggerChildren=".home-commitments__card" style={{ marginTop: 36 }}>
+            <div className="card-grid card-grid--3">
+              {COMMITMENTS.map((item) => (
+                <article
+                  key={item.step}
+                  className="surface-card home-commitments__card"
+                  style={{ opacity: 0 }}
+                >
+                  <span className="home-commitments__step">{item.step}</span>
                   <h3>{item.title}</h3>
                   <p>{item.body}</p>
                 </article>
+              ))}
+            </div>
+          </Reveal>
+        </div>
+      </section>
+
+      <ProcessTimeline />
+
+      <section className="section-x section-y section--light home-industries-light">
+        <div className="container">
+          <Reveal>
+            <p className="eyebrow">Who we support</p>
+            <h2 className="section-heading">
+              Solutions across
+              <br />
+              <span className="accent">business and everyday needs.</span>
+            </h2>
+            <p className="section-lede">
+              We serve businesses and consumers with technology that covers infrastructure, security,
+              software, and the devices that power modern workplaces.
+            </p>
+          </Reveal>
+          <Reveal staggerChildren=".surface-card" style={{ marginTop: 36 }}>
+            <div className="card-grid">
+              {INDUSTRIES.map((item) => (
+                <article key={item.title} className="surface-card" style={{ opacity: 0 }}>
+                  <h3>{item.title}</h3>
+                  <p>{item.body}</p>
+                </article>
+              ))}
+            </div>
+          </Reveal>
+        </div>
+      </section>
+
+      <section className="section-x section-y section--light home-faq">
+        <div className="container">
+          <Reveal>
+            <p className="eyebrow">FAQ</p>
+            <h2 className="section-heading">
+              Answers before
+              <br />
+              <span className="accent">you reach out.</span>
+            </h2>
+            <p className="section-lede">
+              Clear information about our services, location, delivery approach, and how to contact
+              Kinetic Enterprise.
+            </p>
+          </Reveal>
+          <div className="home-faq__list">
+            {HOME_FAQS.map((faq, i) => (
+              <Reveal key={faq.question} delay={i * 60}>
+                <details className="home-faq__item">
+                  <summary>{faq.question}</summary>
+                  <p>{faq.answer}</p>
+                </details>
               </Reveal>
             ))}
           </div>
@@ -137,17 +227,14 @@ export function HomePage() {
 
       <section className="section-x section-y home-cta">
         <div className="container">
-          <Reveal>
+          <Reveal direction="scale">
             <h2 className="section-heading">
               More than a technology supplier —
               <br />
               <span className="accent">a partner in your progress.</span>
             </h2>
-            <p className="section-lede">
-              We combine IT services, technology products, and professional expertise with a focus on
-              quality, reliable technology, and long-term relationships.
-            </p>
-            <ul className="home-partner-list">
+            <p className="section-lede">{PARTNER_INTRO}</p>
+            <ul className="home-partner-list home-partner-list--dark">
               {PARTNER_POINTS.map((point) => (
                 <li key={point}>{point}</li>
               ))}

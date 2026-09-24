@@ -1,5 +1,6 @@
+import Image from 'next/image';
 import Link from 'next/link';
-import { NAV_LINKS, ROUTES } from '@/shared/constants/routes';
+import { LEGAL_LINKS, NAV_LINKS, ROUTES } from '@/shared/constants/routes';
 import { SITE_EMAIL, SITE_NAME, SITE_PHONE, SITE_WEB } from '@/shared/constants/site';
 
 export function FooterArea() {
@@ -7,7 +8,13 @@ export function FooterArea() {
     <footer className="site-footer">
       <div className="container site-footer__grid">
         <div>
-          <div className="site-footer__brand">{SITE_NAME}</div>
+          <Image
+            src="/logo.png"
+            alt={SITE_NAME}
+            width={200}
+            height={150}
+            className="site-footer__logo"
+          />
           <p>
             IT solutions that make your business easier, better, and more efficient — with quality,
             professionalism, and lasting partnerships.
@@ -40,6 +47,16 @@ export function FooterArea() {
             <li>
               <Link href={ROUTES.contact}>Send a message</Link>
             </li>
+          </ul>
+        </div>
+        <div>
+          <h4 className="site-footer__legal-heading">Legal</h4>
+          <ul>
+            {LEGAL_LINKS.map((link) => (
+              <li key={link.href}>
+                <Link href={link.href}>{link.label}</Link>
+              </li>
+            ))}
           </ul>
         </div>
       </div>

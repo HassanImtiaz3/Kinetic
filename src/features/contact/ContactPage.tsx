@@ -32,7 +32,7 @@ export function ContactPage() {
         </div>
       </section>
 
-      <section className="section-x section-y">
+      <section className="section-x section-y section--light">
         <div className="container grid-2 contact-grid">
           <Reveal>
             <div className="contact-details">

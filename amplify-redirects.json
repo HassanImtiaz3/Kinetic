@@ -1,6 +1,30 @@
 [
   {
-    "source": "</^[^.]+$|\\.(?!(css|gif|ico|jpg|jpeg|png|pdf|txt|svg|woff|woff2|ttf|map|json|webp|html)$)([^.]+$)/>",
+    "source": "/sitemap.xml",
+    "status": "200",
+    "target": "/sitemap.xml",
+    "condition": null
+  },
+  {
+    "source": "/robots.txt",
+    "status": "200",
+    "target": "/robots.txt",
+    "condition": null
+  },
+  {
+    "source": "/manifest.webmanifest",
+    "status": "200",
+    "target": "/manifest.webmanifest",
+    "condition": null
+  },
+  {
+    "source": "/<*>",
+    "status": "200",
+    "target": "/<*>.html",
+    "condition": null
+  },
+  {
+    "source": "/<*>",
     "status": "404",
     "target": "/404.html",
     "condition": null

@@ -1,12 +1,5 @@
-.about-strength {
-  border-top: 1px solid var(--color-border);
-  border-bottom: 1px solid var(--color-border);
-  background: rgba(0, 88, 160, 0.06);
-}
-
-.about-why,
-.about-team,
-.about-products {
+.about-values,
+.about-industries {
   border-top: 1px solid var(--color-border);
 }
 

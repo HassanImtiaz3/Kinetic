@@ -14,6 +14,13 @@ frontend:
         - npm run build
         - test -f out/index.html
         - test -f out/404.html
+        - test -f out/sitemap.xml
+        - test -f out/robots.txt
+        - test -f out/services.html -o -d out/services
+        - test -f out/about.html -o -d out/about
+        - test -f out/contact.html -o -d out/contact
+        - test -f out/privacy.html -o -d out/privacy
+        - test -f out/terms.html -o -d out/terms
   artifacts:
     baseDirectory: out
     files:

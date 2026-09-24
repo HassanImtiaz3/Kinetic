@@ -10,8 +10,19 @@ Visual direction inspired by [Joblynk.ai](https://joblynk.ai/) (dark navy + cyan
 - `/about` About Us
 - `/services` Services
 - `/contact` Contact Us
+- `/privacy` Privacy Policy
+- `/terms` Terms of Service
 
-## Run locally
+## SEO & Amplify
+
+Static export includes:
+
+- `sitemap.xml` — prioritized routes for Google indexing
+- `robots.txt` — allows crawlers and points to the sitemap
+- JSON-LD for Organization, WebSite, ProfessionalService, FAQ, and Services
+- `amplify-redirects.json` — clean URLs + preserves sitemap/robots
+
+Set `NEXT_PUBLIC_SITE_URL` (e.g. `https://www.kineticenterprise.com.pk`) in Amplify environment variables before production builds.
 
 ```bash
 nvm use            # Node 20+

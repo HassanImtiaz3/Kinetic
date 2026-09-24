@@ -5,6 +5,10 @@
   font-weight: 600;
 }
 
+.section--light .contact-role {
+  color: var(--color-blue);
+}
+
 .contact-details ul {
   list-style: none;
   margin: 28px 0 0;
@@ -25,13 +29,26 @@
   color: var(--color-text-subtle);
 }
 
+.section--light .contact-details span {
+  color: #64748b;
+}
+
 .contact-details a {
   color: var(--color-text);
   font-weight: 500;
 }
 
-.contact-details a:hover {
+.section--light .contact-details a {
+  color: var(--color-text-on-light);
+}
+
+.contact-details a:hover,
+.section--light .contact-details a:hover {
   color: var(--color-accent);
+}
+
+.section--light .contact-details a:hover {
+  color: var(--color-blue);
 }
 
 .contact-form {
@@ -39,8 +56,23 @@
   gap: 16px;
 }
 
+.section--light .contact-form .field label {
+  color: var(--color-text-muted-on-light);
+}
+
+.section--light .contact-form .field input,
+.section--light .contact-form .field textarea {
+  background: #fff;
+  border-color: var(--color-border-on-light);
+  color: var(--color-text-on-light);
+}
+
 .contact-form__success {
   margin: 0;
   color: var(--color-text-muted);
   line-height: 1.6;
+}
+
+.section--light .contact-form__success {
+  color: var(--color-text-muted-on-light);
 }

@@ -1,6 +1,7 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
+import Image from 'next/image';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { NAV_LINKS, ROUTES } from '@/shared/constants/routes';
@@ -10,13 +11,42 @@ export function Nav() {
   const pathname = usePathname();
   const [scrolled, setScrolled] = useState(false);
   const [open, setOpen] = useState(false);
+  const progressRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 12);
-    onScroll();
+    let ticking = false;
+    let lastScrolled = window.scrollY > 12;
+
+    const update = () => {
+      const scrollTop = window.scrollY;
+      const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+      const progress = docHeight > 0 ? Math.min(1, Math.max(0, scrollTop / docHeight)) : 0;
+      const nextScrolled = scrollTop > 12;
+
+      if (progressRef.current) {
+        progressRef.current.style.transform = `scaleX(${progress})`;
+      }
+      if (nextScrolled !== lastScrolled) {
+        lastScrolled = nextScrolled;
+        setScrolled(nextScrolled);
+      }
+      ticking = false;
+    };
+
+    const onScroll = () => {
+      if (ticking) return;
+      ticking = true;
+      requestAnimationFrame(update);
+    };
+
+    update();
     window.addEventListener('scroll', onScroll, { passive: true });
-    return () => window.removeEventListener('scroll', onScroll);
-  }, []);
+    window.addEventListener('resize', onScroll, { passive: true });
+    return () => {
+      window.removeEventListener('scroll', onScroll);
+      window.removeEventListener('resize', onScroll);
+    };
+  }, [pathname]);
 
   function closeMenu() {
     setOpen(false);
@@ -25,10 +55,17 @@ export function Nav() {
   return (
     <>
       <header className={`site-nav${scrolled || open ? ' is-scrolled' : ''}`}>
+        <div ref={progressRef} className="site-nav__progress" aria-hidden="true" />
         <div className="container section-x site-nav__inner">
           <Link href={ROUTES.home} className="site-nav__brand" aria-label={SITE_NAME} onClick={closeMenu}>
-            <span className="site-nav__mark" aria-hidden />
-            Kinetic
+            <Image
+              src="/logo.png"
+              alt=""
+              width={180}
+              height={135}
+              className="site-nav__logo"
+              priority
+            />
           </Link>
 
           <nav className="site-nav__links" aria-label="Primary">

@@ -4,9 +4,12 @@ import { ROUTES } from '@/shared/constants/routes';
 import {
   ABOUT_APPROACH,
   ABOUT_INTRO,
+  INDUSTRIES,
+  MISSION_CLOSE,
   MISSION_INTRO,
   MISSION_POINTS,
   PRODUCTS,
+  PRODUCTS_INTRO,
   TEAM,
   VALUES,
   VISION,
@@ -31,7 +34,7 @@ export function AboutPage() {
         </div>
       </section>
 
-      <section className="section-x section-y about-strength">
+      <section className="section-x section-y section--light">
         <div className="container grid-2">
           <Reveal>
             <h2 className="section-heading">
@@ -72,11 +75,14 @@ export function AboutPage() {
                 <li key={point}>{point}</li>
               ))}
             </ul>
+            <p className="section-lede" style={{ marginTop: 16 }}>
+              {MISSION_CLOSE}
+            </p>
           </Reveal>
         </div>
       </section>
 
-      <section className="section-x section-y about-why">
+      <section className="section-x section-y section--light">
         <div className="container">
           <Reveal>
             <p className="eyebrow">Why choose Kinetic</p>
@@ -95,7 +101,7 @@ export function AboutPage() {
         </div>
       </section>
 
-      <section className="section-x section-y">
+      <section className="section-x section-y about-values">
         <div className="container">
           <Reveal>
             <p className="eyebrow">Our values</p>
@@ -105,20 +111,20 @@ export function AboutPage() {
               <span className="accent">and excellence.</span>
             </h2>
           </Reveal>
-          <div className="card-grid card-grid--3" style={{ marginTop: 36 }}>
-            {VALUES.map((value, i) => (
-              <Reveal key={value.title} delay={i * 70}>
-                <article className="surface-card">
+          <Reveal staggerChildren=".surface-card" style={{ marginTop: 36 }}>
+            <div className="card-grid card-grid--3">
+              {VALUES.map((value) => (
+                <article key={value.title} className="surface-card" style={{ opacity: 0 }}>
                   <h3>{value.title}</h3>
                   <p>{value.body}</p>
                 </article>
-              </Reveal>
-            ))}
-          </div>
+              ))}
+            </div>
+          </Reveal>
         </div>
       </section>
 
-      <section className="section-x section-y about-team">
+      <section className="section-x section-y section--light">
         <div className="container">
           <Reveal>
             <p className="eyebrow">Our team</p>
@@ -132,7 +138,30 @@ export function AboutPage() {
         </div>
       </section>
 
-      <section className="section-x section-y about-products">
+      <section className="section-x section-y about-industries">
+        <div className="container">
+          <Reveal>
+            <p className="eyebrow">Industries &amp; support</p>
+            <h2 className="section-heading">
+              Technology for
+              <br />
+              <span className="accent">a range of client needs.</span>
+            </h2>
+          </Reveal>
+          <div className="card-grid" style={{ marginTop: 36 }}>
+            {INDUSTRIES.map((item, i) => (
+              <Reveal key={item.title} delay={(i % 4) * 60}>
+                <article className="surface-card">
+                  <h3>{item.title}</h3>
+                  <p>{item.body}</p>
+                </article>
+              </Reveal>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      <section className="section-x section-y section--light">
         <div className="container">
           <Reveal>
             <p className="eyebrow">Products</p>
@@ -141,10 +170,7 @@ export function AboutPage() {
               <br />
               <span className="accent">for business and everyday needs.</span>
             </h2>
-            <p className="section-lede">
-              In addition to our IT services, we supply computing devices, networking equipment,
-              security solutions, and multimedia technology for corporate clients and consumers.
-            </p>
+            <p className="section-lede">{PRODUCTS_INTRO}</p>
           </Reveal>
           <div className="card-grid" style={{ marginTop: 36 }}>
             {PRODUCTS.map((product, i) => (

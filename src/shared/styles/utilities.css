@@ -199,6 +199,99 @@
   line-height: 1.6;
 }
 
+.surface-card__points {
+  list-style: none;
+  margin: 14px 0 0;
+  padding: 0;
+  display: grid;
+  gap: 8px;
+}
+
+.surface-card__points li {
+  position: relative;
+  padding-left: 14px;
+  color: var(--color-text-muted);
+  font-size: 0.875rem;
+  line-height: 1.45;
+}
+
+.surface-card__points li::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0.55em;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--color-accent);
+}
+
+/* Light / white bands — Silver Axis–style rhythm */
+.section--light {
+  background:
+    linear-gradient(180deg, #f8fafc 0%, var(--color-bg-light) 100%);
+  color: var(--color-text-on-light);
+  border-block: 1px solid var(--color-border-on-light);
+}
+
+.section--light .section-heading {
+  color: var(--color-text-on-light);
+}
+
+.section--light .section-heading .accent {
+  color: var(--color-blue);
+}
+
+.section--light .section-lede {
+  color: var(--color-text-muted-on-light);
+}
+
+.section--light .eyebrow {
+  border-color: rgba(0, 88, 160, 0.25);
+  background: rgba(0, 88, 160, 0.08);
+  color: var(--color-blue);
+}
+
+.section--light .eyebrow::before {
+  background: var(--color-blue);
+  box-shadow: 0 0 10px rgba(0, 88, 160, 0.35);
+}
+
+.section--light .surface-card {
+  background: var(--color-bg-light-elevated);
+  border-color: var(--color-border-on-light);
+  box-shadow: 0 10px 30px rgba(15, 23, 42, 0.04);
+}
+
+.section--light .surface-card:hover {
+  border-color: rgba(0, 88, 160, 0.28);
+  box-shadow: 0 18px 40px rgba(15, 23, 42, 0.08);
+}
+
+.section--light .surface-card h3 {
+  color: var(--color-text-on-light);
+}
+
+.section--light .surface-card p,
+.section--light .surface-card__points li {
+  color: var(--color-text-muted-on-light);
+}
+
+.section--light .btn-ghost {
+  color: var(--color-text-on-light);
+  border-color: var(--color-border-on-light);
+}
+
+.section--light .btn-ghost:hover {
+  border-color: var(--color-blue);
+  background: rgba(0, 88, 160, 0.06);
+  color: var(--color-blue);
+}
+
+.section--light .btn-primary {
+  color: #041018;
+}
+
 .field {
   display: flex;
   flex-direction: column;
