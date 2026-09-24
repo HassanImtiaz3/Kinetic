@@ -1,0 +1,134 @@
+.home-hero {
+  display: grid;
+  gap: 40px;
+  align-items: center;
+}
+
+@media (min-width: 920px) {
+  .home-hero {
+    grid-template-columns: 1.15fr 0.85fr;
+    gap: 56px;
+  }
+}
+
+.home-hero__title {
+  font-size: clamp(2.6rem, 7vw, 4.5rem);
+  line-height: 1.02;
+}
+
+.home-hero__panel {
+  position: relative;
+  min-height: 320px;
+  border-radius: 24px;
+  border: 1px solid var(--color-border);
+  background:
+    linear-gradient(160deg, rgba(48, 176, 240, 0.12), transparent 45%),
+    linear-gradient(180deg, #0d1b2e, #08101c);
+  overflow: hidden;
+  padding: 28px;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+}
+
+.home-hero__orb {
+  position: absolute;
+  top: 18%;
+  right: 12%;
+  width: 140px;
+  height: 140px;
+  border-radius: 50%;
+  background: radial-gradient(circle at 30% 30%, #7dd3fc, var(--color-accent) 45%, transparent 70%);
+  filter: blur(2px);
+  opacity: 0.85;
+  box-shadow: 0 0 80px var(--color-accent-glow);
+}
+
+.home-hero__pipeline {
+  display: grid;
+  gap: 8px;
+  margin-bottom: 20px;
+  position: relative;
+  z-index: 1;
+}
+
+.home-hero__pipeline span {
+  display: inline-flex;
+  width: fit-content;
+  padding: 8px 14px;
+  border-radius: var(--radius-pill);
+  border: 1px solid rgba(48, 176, 240, 0.25);
+  background: rgba(5, 11, 20, 0.55);
+  color: var(--color-text);
+  font-size: 0.8125rem;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+}
+
+.home-hero__panel-copy {
+  margin: 0;
+  position: relative;
+  z-index: 1;
+  color: var(--color-text-muted);
+  font-size: 0.95rem;
+}
+
+.home-approach {
+  border-top: 1px solid var(--color-border);
+}
+
+.home-approach__grid {
+  display: grid;
+  gap: 14px;
+  margin-top: 36px;
+}
+
+@media (min-width: 720px) {
+  .home-approach__grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (min-width: 1100px) {
+  .home-approach__grid {
+    grid-template-columns: repeat(5, 1fr);
+  }
+}
+
+.home-approach__card h3 {
+  margin: 0 0 8px;
+  font-size: 1.05rem;
+}
+
+.home-approach__step {
+  display: inline-block;
+  margin-bottom: 12px;
+  color: var(--color-accent);
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+}
+
+.home-partner-list {
+  list-style: none;
+  margin: 28px 0 0;
+  padding: 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.home-partner-list li {
+  padding: 10px 14px;
+  border-radius: var(--radius-pill);
+  border: 1px solid var(--color-border);
+  background: rgba(13, 27, 46, 0.7);
+  color: var(--color-text-muted);
+  font-size: 0.875rem;
+  font-weight: 500;
+}
+
+.home-cta {
+  border-top: 1px solid var(--color-border);
+  background: linear-gradient(180deg, rgba(0, 88, 160, 0.12), transparent);
+}

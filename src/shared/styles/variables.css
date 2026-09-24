@@ -1,0 +1,34 @@
+:root {
+  /* Joblynk-inspired blue system — Kinetic Enterprise */
+  --color-bg: #050b14;
+  --color-bg-elevated: #0a1628;
+  --color-bg-card: #0d1b2e;
+  --color-navy: #003b6e;
+  --color-blue: #0058a0;
+  --color-accent: #30b0f0;
+  --color-accent-soft: rgba(48, 176, 240, 0.14);
+  --color-accent-glow: rgba(48, 176, 240, 0.35);
+  --color-text: #f8fafc;
+  --color-text-muted: #94a3b8;
+  --color-text-subtle: #64748b;
+  --color-border: rgba(226, 232, 240, 0.1);
+  --color-border-strong: rgba(48, 176, 240, 0.35);
+  --color-white: #ffffff;
+
+  --font-sans: var(--font-outfit), 'Outfit', system-ui, -apple-system, 'Segoe UI', sans-serif;
+
+  --max-content: 1120px;
+  --section-x: clamp(20px, 5vw, 48px);
+  --section-y: clamp(72px, 12vw, 120px);
+  --nav-height: 76px;
+  --radius: 16px;
+  --radius-pill: 999px;
+  --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+  --touch-min: 44px;
+}
+
+@media (max-width: 768px) {
+  :root {
+    --nav-height: 64px;
+  }
+}

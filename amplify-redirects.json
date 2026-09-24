@@ -1,0 +1,8 @@
+[
+  {
+    "source": "</^[^.]+$|\\.(?!(css|gif|ico|jpg|jpeg|png|pdf|txt|svg|woff|woff2|ttf|map|json|webp|html)$)([^.]+$)/>",
+    "status": "404",
+    "target": "/404.html",
+    "condition": null
+  }
+]

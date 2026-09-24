@@ -1,0 +1,43 @@
+# dependencies
+node_modules/
+.pnp
+.pnp.*
+.yarn/install-state.gz
+
+# next.js / build
+.next/
+out/
+build/
+dist/
+tsconfig.tsbuildinfo
+*.tsbuildinfo
+
+# env / secrets (keep .env.example tracked)
+.env
+.env.*
+!.env.example
+
+# debug / logs
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+.pnpm-debug.log*
+*.log
+
+# editor / OS
+.DS_Store
+Thumbs.db
+*.pem
+.idea/
+.vscode/
+*.swp
+*.swo
+
+# testing / coverage / local tooling
+coverage/
+.vercel
+.turbo
+.cache/
+# Amplify CLI local backend (root amplify.yml stays tracked)
+.amplify/
+amplify/
