@@ -1,15 +1,12 @@
-# Build static Next.js export and deploy to Namecheap/cPanel via FTP.
+# Build static export and publish to the `cpanel` branch.
+# cPanel Git Version Control deploys that branch into public_html
+# (FTP/SFTP from GitHub Actions is blocked on this host).
 #
-# Required GitHub repo secrets (Settings → Secrets and variables → Actions):
-#   FTP_SERVER       — e.g. ftp.yourdomain.com or 198.54.117.242
-#   FTP_USERNAME     — cPanel/FTP user (e.g. techhgsg or techhgsg@yourdomain.com)
-#   FTP_PASSWORD     — FTP password
-#   FTP_SERVER_DIR   — remote path ending with /, e.g. /public_html/ or /kineticenterprise.com/
-#   SITE_URL         — production origin, no trailing slash, e.g. https://yourdomain.com
+# Required GitHub secret:
+#   SITE_URL — e.g. https://kineticenterprise.com.pk
 #
-# Namecheap/cPanel usually needs FTPS (explicit TLS) on port 21 from GitHub Actions.
-# Prefer FTP_SERVER from cPanel → FTP Accounts → Configure FTP Client
-# (often ftp.yourdomain.com or serverXX.web-hosting.com — not always the shared IP).
+# One-time cPanel setup (see README):
+#   Git Version Control → clone this repo → deploy branch `cpanel`
 
 name: Deploy to cPanel
 
@@ -21,6 +18,9 @@ on:
 concurrency:
   group: deploy-cpanel
   cancel-in-progress: true
+
+permissions:
+  contents: write
 
 jobs:
   build-and-deploy:
@@ -45,28 +45,19 @@ jobs:
           NEXT_PUBLIC_SITE_URL: ${{ secrets.SITE_URL }}
         run: |
           if [ -z "$NEXT_PUBLIC_SITE_URL" ]; then
-            echo "Missing secret SITE_URL (e.g. https://yourdomain.com)"
+            echo "Missing secret SITE_URL (e.g. https://kineticenterprise.com.pk)"
             exit 1
           fi
           npm run build
           test -f out/index.html
           test -f out/404.html
+          test -f out/.cpanel.yml
 
-      - name: Deploy out/ via FTPS
-        uses: SamKirkland/FTP-Deploy-Action@v4.3.5
+      - name: Publish out/ to cpanel branch
+        uses: peaceiris/actions-gh-pages@v4
         with:
-          server: ${{ secrets.FTP_SERVER }}
-          username: ${{ secrets.FTP_USERNAME }}
-          password: ${{ secrets.FTP_PASSWORD }}
-          protocol: ftps
-          port: 21
-          security: loose
-          timeout: 60000
-          local-dir: ./out/
-          server-dir: ${{ secrets.FTP_SERVER_DIR }}
-          dangerous-clean-slate: false
-          exclude: |
-            **/.git*
-            **/.git*/**
-            **/node_modules/**
-            **/.ftp-deploy-sync-state.json
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./out
+          publish_branch: cpanel
+          force_orphan: true
+          commit_message: 'Deploy static site'

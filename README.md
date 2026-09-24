@@ -31,17 +31,20 @@ Set `NEXT_PUBLIC_SITE_URL` before production builds (see `.env.example`).
 
 ## Deploy (GitHub Actions → cPanel)
 
-Push to `main` builds the static site and uploads `out/` over FTP.
+Push to `main` builds the site and publishes it to the **`cpanel`** branch.
+cPanel Git then copies those files into `public_html`.
 
-1. In cPanel → **FTP Accounts**, create an FTP user (or use the main account) with access to the domain document root.
-2. In GitHub → **Settings → Secrets and variables → Actions**, add:
+### GitHub
 
 | Secret | Example |
 |--------|---------|
-| `FTP_SERVER` | `198.54.117.242` or `ftp.yourdomain.com` |
-| `FTP_USERNAME` | `techhgsg` |
-| `FTP_PASSWORD` | *(FTP password)* |
-| `FTP_SERVER_DIR` | `/public_html/` or `/yourdomain.com/` |
-| `SITE_URL` | `https://yourdomain.com` |
+| `SITE_URL` | `https://kineticenterprise.com.pk` |
 
-3. Push to `main` (or run **Actions → Deploy to cPanel → Run workflow**).
+(FTP secrets are unused with this flow.)
+
+### cPanel (one-time)
+
+1. **Git Version Control** → Create → clone `https://github.com/HassanImtiaz3/Kinetic.git`
+2. Set the checked-out branch to **`cpanel`** (after the first Actions run creates it).
+3. Ensure deploy path / `.cpanel.yml` targets `/home/techhgxq/public_html/`.
+4. Optional: add a GitHub webhook so each push auto-deploys (cPanel shows the webhook URL).
