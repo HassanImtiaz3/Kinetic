@@ -28,3 +28,20 @@ npm run lint
 ```
 
 Set `NEXT_PUBLIC_SITE_URL` before production builds (see `.env.example`).
+
+## Deploy (GitHub Actions → cPanel)
+
+Push to `main` builds the static site and uploads `out/` over FTP.
+
+1. In cPanel → **FTP Accounts**, create an FTP user (or use the main account) with access to the domain document root.
+2. In GitHub → **Settings → Secrets and variables → Actions**, add:
+
+| Secret | Example |
+|--------|---------|
+| `FTP_SERVER` | `198.54.117.242` or `ftp.yourdomain.com` |
+| `FTP_USERNAME` | `techhgsg` |
+| `FTP_PASSWORD` | *(FTP password)* |
+| `FTP_SERVER_DIR` | `/public_html/` or `/yourdomain.com/` |
+| `SITE_URL` | `https://yourdomain.com` |
+
+3. Push to `main` (or run **Actions → Deploy to cPanel → Run workflow**).

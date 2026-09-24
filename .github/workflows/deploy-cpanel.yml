@@ -1,0 +1,67 @@
+# Build static Next.js export and deploy to Namecheap/cPanel via FTP.
+#
+# Required GitHub repo secrets (Settings → Secrets and variables → Actions):
+#   FTP_SERVER       — e.g. ftp.yourdomain.com or 198.54.117.242
+#   FTP_USERNAME     — cPanel/FTP user (e.g. techhgsg or techhgsg@yourdomain.com)
+#   FTP_PASSWORD     — FTP password
+#   FTP_SERVER_DIR   — remote path ending with /, e.g. /public_html/ or /kineticenterprise.com/
+#   SITE_URL         — production origin, no trailing slash, e.g. https://yourdomain.com
+#
+# Optional:
+#   FTP_PORT         — default 21 (use 22 only if your host expects FTPS differently; this action uses FTP)
+
+name: Deploy to cPanel
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+concurrency:
+  group: deploy-cpanel
+  cancel-in-progress: true
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version-file: '.nvmrc'
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci --no-audit
+
+      - name: Build static export
+        env:
+          NEXT_PUBLIC_SITE_URL: ${{ secrets.SITE_URL }}
+        run: |
+          if [ -z "$NEXT_PUBLIC_SITE_URL" ]; then
+            echo "Missing secret SITE_URL (e.g. https://yourdomain.com)"
+            exit 1
+          fi
+          npm run build
+          test -f out/index.html
+          test -f out/404.html
+
+      - name: Deploy out/ via FTP
+        uses: SamKirkland/FTP-Deploy-Action@v4.3.5
+        with:
+          server: ${{ secrets.FTP_SERVER }}
+          username: ${{ secrets.FTP_USERNAME }}
+          password: ${{ secrets.FTP_PASSWORD }}
+          local-dir: ./out/
+          server-dir: ${{ secrets.FTP_SERVER_DIR }}
+          dangerous-clean-slate: false
+          exclude: |
+            **/.git*
+            **/.git*/**
+            **/node_modules/**
+            **/.ftp-deploy-sync-state.json

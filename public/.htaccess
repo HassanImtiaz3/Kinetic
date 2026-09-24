@@ -1,0 +1,20 @@
+# Apache rules for static Next.js export on cPanel
+DirectoryIndex index.html
+
+# Serve the Next export 404 page
+ErrorDocument 404 /404.html
+
+# Optional: force HTTPS once SSL is active (uncomment when ready)
+# RewriteEngine On
+# RewriteCond %{HTTPS} !=on
+# RewriteRule ^ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
+
+# Cache static assets
+<IfModule mod_headers.c>
+  <FilesMatch "\.(js|css|woff2?|png|jpg|jpeg|gif|svg|ico|webp)$">
+    Header set Cache-Control "public, max-age=31536000, immutable"
+  </FilesMatch>
+  <FilesMatch "\.(html)$">
+    Header set Cache-Control "public, max-age=0, must-revalidate"
+  </FilesMatch>
+</IfModule>
