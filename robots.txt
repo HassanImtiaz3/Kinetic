@@ -1,0 +1,8 @@
+User-Agent: *
+Allow: /
+
+User-Agent: Googlebot
+Allow: /
+
+Host: https://kineticenterprise.com.pk
+Sitemap: https://kineticenterprise.com.pk/sitemap.xml
