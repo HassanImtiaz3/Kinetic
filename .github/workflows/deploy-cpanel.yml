@@ -7,8 +7,9 @@
 #   FTP_SERVER_DIR   — remote path ending with /, e.g. /public_html/ or /kineticenterprise.com/
 #   SITE_URL         — production origin, no trailing slash, e.g. https://yourdomain.com
 #
-# Optional:
-#   FTP_PORT         — default 21 (use 22 only if your host expects FTPS differently; this action uses FTP)
+# Namecheap/cPanel usually needs FTPS (explicit TLS) on port 21 from GitHub Actions.
+# Prefer FTP_SERVER from cPanel → FTP Accounts → Configure FTP Client
+# (often ftp.yourdomain.com or serverXX.web-hosting.com — not always the shared IP).
 
 name: Deploy to cPanel
 
@@ -51,12 +52,16 @@ jobs:
           test -f out/index.html
           test -f out/404.html
 
-      - name: Deploy out/ via FTP
+      - name: Deploy out/ via FTPS
         uses: SamKirkland/FTP-Deploy-Action@v4.3.5
         with:
           server: ${{ secrets.FTP_SERVER }}
           username: ${{ secrets.FTP_USERNAME }}
           password: ${{ secrets.FTP_PASSWORD }}
+          protocol: ftps
+          port: 21
+          security: loose
+          timeout: 60000
           local-dir: ./out/
           server-dir: ${{ secrets.FTP_SERVER_DIR }}
           dangerous-clean-slate: false
